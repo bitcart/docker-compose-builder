@@ -1,17 +1,16 @@
 version: 2
 jobs:
   build:
-    docker:
-      - image: circleci/python:3.6.8
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
   # publish jobs require $DOCKERHUB_USER, $DOCKERHUB_PASS defined
   arm32v7:
-    docker:
-      - image: circleci/python:3.6.8
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
@@ -31,11 +30,10 @@ jobs:
             sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
             sudo docker push $DOCKERHUB_DESTINATION
   arm64v8:
-    docker:
-      - image: circleci/python:3.6.8
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
@@ -55,11 +53,10 @@ jobs:
             sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
             sudo docker push $DOCKERHUB_DESTINATION
   amd64:
-    docker:
-      - image: circleci/python:3.6.8
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
-      - setup_remote_docker
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
@@ -72,10 +69,9 @@ jobs:
             sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
             sudo docker push $DOCKERHUB_DESTINATION
   multiarch:
-    docker:
-      - image: circleci/python:3.6.8
+    machine:
+      image: ubuntu-1604:201903-01
     steps:
-      - setup_remote_docker
       - run:
           command: |
             # Turn on Experimental features
