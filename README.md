@@ -4,6 +4,6 @@ This repository contains dockerfiles for building docker-compose for a number of
 - arm32
 - arm64
 
-The images are built and hosted in [dockerhub](https://hub.docker.com/r/mrnaif/docker-compose-builder)
+The images are built and hosted in [dockerhub](https://hub.docker.com/r/bitcartcc/docker-compose-builder)
 
 Contributions are welcome!

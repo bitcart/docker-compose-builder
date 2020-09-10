@@ -14,7 +14,7 @@ jobs:
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
-            DOCKERHUB_REPO="mrnaif/docker-compose-builder"
+            DOCKERHUB_REPO="bitcartcc/docker-compose-builder"
             DOCKERHUB_DESTINATION="$DOCKERHUB_REPO:$LATEST_TAG-arm32v7"
             DOCKERHUB_DOCKEFILE="linuxarm32v7.Dockerfile"
             #
@@ -37,7 +37,7 @@ jobs:
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
-            DOCKERHUB_REPO="mrnaif/docker-compose-builder"
+            DOCKERHUB_REPO="bitcartcc/docker-compose-builder"
             DOCKERHUB_DESTINATION="$DOCKERHUB_REPO:$LATEST_TAG-arm64v8"
             DOCKERHUB_DOCKEFILE="linuxarm64v8.Dockerfile"
             #
@@ -60,7 +60,7 @@ jobs:
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
-            DOCKERHUB_REPO="mrnaif/docker-compose-builder"
+            DOCKERHUB_REPO="bitcartcc/docker-compose-builder"
             DOCKERHUB_DESTINATION="$DOCKERHUB_REPO:$LATEST_TAG-amd64"
             DOCKERHUB_DOCKEFILE="linuxamd64.Dockerfile"
             #
@@ -81,7 +81,7 @@ jobs:
             sudo docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS
             #
             LATEST_TAG=${CIRCLE_TAG:1} #trim v from tag
-            DOCKERHUB_REPO="mrnaif/docker-compose-builder"
+            DOCKERHUB_REPO="bitcartcc/docker-compose-builder"
             DOCKERHUB_DESTINATION="$DOCKERHUB_REPO:$LATEST_TAG"
             sudo docker manifest create --amend $DOCKERHUB_DESTINATION $DOCKERHUB_DESTINATION-amd64 $DOCKERHUB_DESTINATION-arm32v7 $DOCKERHUB_DESTINATION-arm64v8
             sudo docker manifest annotate $DOCKERHUB_DESTINATION $DOCKERHUB_DESTINATION-amd64 --os linux --arch amd64
