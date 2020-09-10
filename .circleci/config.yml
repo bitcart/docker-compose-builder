@@ -2,13 +2,13 @@ version: 2
 jobs:
   build:
     machine:
-      image: ubuntu-1604:202007-01
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
   # publish jobs require $DOCKERHUB_USER, $DOCKERHUB_PASS defined
   arm32v7:
     machine:
-      image: ubuntu-1604:202007-01
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
@@ -31,7 +31,7 @@ jobs:
             sudo docker push $DOCKERHUB_DESTINATION
   arm64v8:
     machine:
-      image: ubuntu-1604:202007-01
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
@@ -54,7 +54,7 @@ jobs:
             sudo docker push $DOCKERHUB_DESTINATION
   amd64:
     machine:
-      image: ubuntu-1604:202007-01
+      image: ubuntu-1604:201903-01
     steps:
       - checkout
       - run:
@@ -70,7 +70,7 @@ jobs:
             sudo docker push $DOCKERHUB_DESTINATION
   multiarch:
     machine:
-      image: ubuntu-1604:202007-01
+      image: ubuntu-1604:201903-01
     steps:
       - run:
           command: |
