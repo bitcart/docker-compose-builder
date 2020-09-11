@@ -20,16 +20,16 @@ jobs:
             DOCKERHUB_DOCKEFILE="linuxarm32v7.Dockerfile"
             #
             # Make sure the builder is copy the arm emulator
-            sudo docker run --rm --privileged multiarch/qemu-user-static:register --reset
-            sudo apt-get update
-            sudo apt install -y qemu qemu-user-static qemu-user binfmt-support
-            sudo cp /usr/bin/qemu-arm-static "$(dirname "$DOCKERHUB_DOCKEFILE")/qemu-arm-static"
+            docker run --rm --privileged multiarch/qemu-user-static:register --reset
+            apt-get update
+            apt install -y qemu qemu-user-static qemu-user binfmt-support
+            cp /usr/bin/qemu-arm-static "$(dirname "$DOCKERHUB_DOCKEFILE")/qemu-arm-static"
             sed -i -e 's/#EnableQEMU //g' "$DOCKERHUB_DOCKEFILE"
             #
             echo "Pushing $DOCKERHUB_DOCKEFILE to dockerhub repository $DOCKERHUB_DESTINATION"
-            sudo docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS
-            sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
-            sudo docker push $DOCKERHUB_DESTINATION
+            docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS
+            docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
+            docker push $DOCKERHUB_DESTINATION
   arm64v8:
     docker:
       - image: ubuntu:18.04
@@ -44,16 +44,16 @@ jobs:
             DOCKERHUB_DOCKEFILE="linuxarm64v8.Dockerfile"
             #
             # Make sure the builder is copy the arm emulator
-            sudo docker run --rm --privileged multiarch/qemu-user-static:register --reset
-            sudo apt-get update
-            sudo apt install -y qemu qemu-user-static qemu-user binfmt-support
-            sudo cp /usr/bin/qemu-aarch64-static "$(dirname "$DOCKERHUB_DOCKEFILE")/qemu-aarch64-static"
+            docker run --rm --privileged multiarch/qemu-user-static:register --reset
+            apt-get update
+            apt install -y qemu qemu-user-static qemu-user binfmt-support
+            cp /usr/bin/qemu-aarch64-static "$(dirname "$DOCKERHUB_DOCKEFILE")/qemu-aarch64-static"
             sed -i -e 's/#EnableQEMU //g' "$DOCKERHUB_DOCKEFILE"
             #
             echo "Pushing $DOCKERHUB_DOCKEFILE to dockerhub repository $DOCKERHUB_DESTINATION"
-            sudo docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS
-            sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
-            sudo docker push $DOCKERHUB_DESTINATION
+            docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS
+            docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
+            docker push $DOCKERHUB_DESTINATION
   amd64:
     docker:
       - image: ubuntu:18.04
@@ -68,9 +68,9 @@ jobs:
             DOCKERHUB_DOCKEFILE="linuxamd64.Dockerfile"
             #
             echo "Pushing $DOCKERHUB_DOCKEFILE to dockerhub repository $DOCKERHUB_DESTINATION"
-            sudo docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS
-            sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
-            sudo docker push $DOCKERHUB_DESTINATION
+            docker login --username=$DOCKERHUB_USER --password=$DOCKERHUB_PASS
+            docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
+            docker push $DOCKERHUB_DESTINATION
   multiarch:
     machine:
       image: ubuntu-1604:201903-01
