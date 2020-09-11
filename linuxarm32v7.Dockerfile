@@ -16,7 +16,6 @@ ENV PYINSTALLER_VER 3.5
 ENV SIX_VER 1.11.0
 
 # Install dependencies
-# RUN apt-get update && apt-get install -y
 RUN pip install --upgrade pip
 RUN pip install six==$SIX_VER
 
@@ -32,18 +31,8 @@ WORKDIR /build/dockercompose
 RUN curl -fsSL https://github.com/docker/compose/archive/$DOCKER_COMPOSE_VER.zip > $DOCKER_COMPOSE_VER.zip \
     && unzip $DOCKER_COMPOSE_VER.zip
 
-# We need to patch pynacl because of https://github.com/pyca/pynacl/issues/553
-COPY PyNaCl-remove-check.patch PyNaCl-remove-check.patch
-RUN cd compose-$DOCKER_COMPOSE_VER && pip download --dest "/tmp/packages" -r requirements.txt -r requirements-build.txt wheel && cd .. && \
-    wget -qO pynacl.tar.gz https://github.com/pyca/pynacl/archive/1.3.0.tar.gz && \
-    echo "205adb2804eed4bc3780584e368ef2e9b8b22a7aae85323068cadd59f3c8a584  pynacl.tar.gz" | sha256sum -c - && \
-    mkdir pynacl && tar --strip-components=1 -xvf pynacl.tar.gz -C pynacl && rm pynacl.tar.gz && \
-    cd pynacl && \
-    git apply ../PyNaCl-remove-check.patch && \
-    python3 setup.py sdist && \
-    cp -f dist/PyNaCl-1.3.0.tar.gz /tmp/packages/ && \
-    cd ../compose-$DOCKER_COMPOSE_VER && rm -rf ../pynacl && \
-    pip install --no-index --find-links /tmp/packages -r requirements.txt -r requirements-build.txt && rm -rf /tmp/packages
+RUN cd compose-$DOCKER_COMPOSE_VER && mkdir ./dist \
+    && pip install -r requirements.txt -r requirements-build.txt
 
 RUN cd compose-$DOCKER_COMPOSE_VER \
     && echo "unknown" > compose/GITSHA \

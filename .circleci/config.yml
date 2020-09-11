@@ -1,8 +1,8 @@
 version: 2
 jobs:
   build:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: ubuntu:18.04
     steps:
       - checkout
   # publish jobs require $DOCKERHUB_USER, $DOCKERHUB_PASS defined
@@ -11,6 +11,7 @@ jobs:
       image: ubuntu-1604:201903-01
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
@@ -30,10 +31,11 @@ jobs:
             sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
             sudo docker push $DOCKERHUB_DESTINATION
   arm64v8:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: ubuntu:18.04
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
@@ -53,10 +55,11 @@ jobs:
             sudo docker build --pull --build-arg "DOCKER_COMPOSE_VER=$LATEST_TAG" -t $DOCKERHUB_DESTINATION -f "$DOCKERHUB_DOCKEFILE" .
             sudo docker push $DOCKERHUB_DESTINATION
   amd64:
-    machine:
-      image: ubuntu-1604:201903-01
+    docker:
+      - image: ubuntu:18.04
     steps:
       - checkout
+      - setup_remote_docker
       - run:
           command: |
             LATEST_TAG="${CIRCLE_TAG:1}"
