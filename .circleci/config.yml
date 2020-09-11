@@ -21,7 +21,7 @@ jobs:
             # Make sure the builder is copy the arm emulator
             sudo docker run --rm --privileged multiarch/qemu-user-static:register --reset
             sudo apt-get update
-            sudo apt-get install -y qemu qemu-user-static qemu-user binfmt-support
+            sudo apt install -y qemu qemu-user-static qemu-user binfmt-support
             sudo cp /usr/bin/qemu-arm-static "$(dirname "$DOCKERHUB_DOCKEFILE")/qemu-arm-static"
             sed -i -e 's/#EnableQEMU //g' "$DOCKERHUB_DOCKEFILE"
             #
@@ -44,7 +44,7 @@ jobs:
             # Make sure the builder is copy the arm emulator
             sudo docker run --rm --privileged multiarch/qemu-user-static:register --reset
             sudo apt-get update
-            sudo apt-get install -y qemu qemu-user-static qemu-user binfmt-support
+            sudo apt install -y qemu qemu-user-static qemu-user binfmt-support
             sudo cp /usr/bin/qemu-aarch64-static "$(dirname "$DOCKERHUB_DOCKEFILE")/qemu-aarch64-static"
             sed -i -e 's/#EnableQEMU //g' "$DOCKERHUB_DOCKEFILE"
             #
